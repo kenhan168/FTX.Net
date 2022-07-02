@@ -25,14 +25,17 @@ namespace FTX.Net.SymbolOrderBooks
         private readonly bool _socketOwner;
         private readonly int? _grouping;
         private readonly TimeSpan _initialDataTimeout;
-
+        
+        
         /// <summary>
         /// Create a new order book
         /// </summary>
         /// <param name="symbol">Symbol the book is for</param>
+        /// <param name="updateHandler">Handler for update</param>
         /// <param name="options">Options for the book</param>
-        public FTXSymbolOrderBook(string symbol, FTXSymbolOrderBookOptions? options = null) : base("FTX", symbol, options ?? new FTXSymbolOrderBookOptions())
+        public FTXSymbolOrderBook(string symbol, Action updateHandler, FTXSymbolOrderBookOptions? options = null) : base("FTX", symbol, options ?? new FTXSymbolOrderBookOptions())
         {
+            this.handleUpdate = updateHandler;
             strictLevels = false;
             sequencesAreConsecutive = false;
             _initialDataTimeout = options?.InitialDataTimeout ?? TimeSpan.FromSeconds(30);
@@ -95,22 +98,22 @@ namespace FTX.Net.SymbolOrderBooks
         /// <inheritdoc />
         protected override bool DoChecksum(int checksum)
         {
-            var checksumString = "";
+            var checksumStringBuilder = new StringBuilder();
             for (var i = 0; i < 100; i++)
             {
                 if (bids.Count > i)
                 {
                     var bid = (FTXOrderBookEntry)bids.ElementAt(i).Value;
-                    checksumString += $"{bid.RawPrice}:{bid.RawQuantity}:";
+                    checksumStringBuilder.Append($"{bid.RawPrice}:{bid.RawQuantity}:");
                 }
                 if (asks.Count > i)
                 {
                     var ask = (FTXOrderBookEntry)asks.ElementAt(i).Value;
-                    checksumString += $"{ask.RawPrice}:{ask.RawQuantity}:";
+                    checksumStringBuilder.Append($"{ask.RawPrice}:{ask.RawQuantity}:");
                 }
             }
 
-            checksumString = checksumString.TrimEnd(':');
+            var checksumString = checksumStringBuilder.ToString().TrimEnd(':');
 
             var ourChecksumUtf = (int)Crc32Algorithm.Compute(Encoding.UTF8.GetBytes(checksumString));
 

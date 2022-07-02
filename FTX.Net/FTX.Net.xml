@@ -5777,11 +5777,12 @@
             Symbol order book
             </summary>
         </member>
-        <member name="M:FTX.Net.SymbolOrderBooks.FTXSymbolOrderBook.#ctor(System.String,FTX.Net.Objects.FTXSymbolOrderBookOptions)">
+        <member name="M:FTX.Net.SymbolOrderBooks.FTXSymbolOrderBook.#ctor(System.String,System.Action,FTX.Net.Objects.FTXSymbolOrderBookOptions)">
             <summary>
             Create a new order book
             </summary>
             <param name="symbol">Symbol the book is for</param>
+            <param name="updateHandler">Handler for update</param>
             <param name="options">Options for the book</param>
         </member>
         <member name="M:FTX.Net.SymbolOrderBooks.FTXSymbolOrderBook.DoStartAsync(System.Threading.CancellationToken)">
