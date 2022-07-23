@@ -5777,7 +5777,7 @@
             Symbol order book
             </summary>
         </member>
-        <member name="M:FTX.Net.SymbolOrderBooks.FTXSymbolOrderBook.#ctor(System.String,System.Action,FTX.Net.Objects.FTXSymbolOrderBookOptions)">
+        <member name="M:FTX.Net.SymbolOrderBooks.FTXSymbolOrderBook.#ctor(System.String,System.Action{System.String},FTX.Net.Objects.FTXSymbolOrderBookOptions)">
             <summary>
             Create a new order book
             </summary>

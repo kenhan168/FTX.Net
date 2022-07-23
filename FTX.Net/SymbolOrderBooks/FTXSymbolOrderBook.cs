@@ -33,7 +33,7 @@ namespace FTX.Net.SymbolOrderBooks
         /// <param name="symbol">Symbol the book is for</param>
         /// <param name="updateHandler">Handler for update</param>
         /// <param name="options">Options for the book</param>
-        public FTXSymbolOrderBook(string symbol, Action updateHandler, FTXSymbolOrderBookOptions? options = null) : base("FTX", symbol, options ?? new FTXSymbolOrderBookOptions())
+        public FTXSymbolOrderBook(string symbol, Action<string> updateHandler, FTXSymbolOrderBookOptions? options = null) : base("FTX", symbol, options ?? new FTXSymbolOrderBookOptions())
         {
             this.handleUpdate = updateHandler;
             strictLevels = false;
